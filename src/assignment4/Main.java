@@ -104,6 +104,7 @@ public class Main {
 					}
 	        	}
 	        }
+	       // System.out.println("test");
 	        else if(input.equals("stats")){
 	        	String class_name = kb.next();
 	        	try {
