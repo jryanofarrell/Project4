@@ -12,8 +12,8 @@
  */
 package assignment4;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
@@ -23,8 +23,8 @@ import java.util.Random;
 
 public abstract class Critter {
 	private static String myPackage;
-	private	static List<Critter> population = new java.util.ArrayList<Critter>();
-	private static List<Critter> babies = new java.util.ArrayList<Critter>();
+	private	static List<Critter> population = new ArrayList<Critter>();
+	private static List<Critter> babies = new ArrayList<Critter>();
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -50,46 +50,50 @@ public abstract class Critter {
 	private int x_coord;
 	private int y_coord;
 	private void change_coord(int direction,int distance){
-		if(direction == 0){
+		switch(direction){
+		case 0 :
 			x_coord += distance;
-		}
-		else if(direction == 1){
+			break;
+		case 1:
 			x_coord += distance;
 			y_coord -= distance;
-		}
-		else if(direction == 2){
+			break;
+		case 2:
 			y_coord -= distance;
-		}
-		else if(direction == 3){
+			break;
+		case 3:
 			x_coord -= distance;
 			y_coord -= distance;
-		}
-		else if(direction == 4){
+			break;
+		case 4 :
 			x_coord -= distance;
-		}
-		else if(direction == 5){
+			break;
+		case 5 :
 			x_coord -= distance;
 			y_coord += distance;
-		}
-		else if(direction == 6){
+			break;
+		case 6:
 			y_coord += distance;
-		}
-		else if(direction == 7){
+			break;
+		case 7 :
 			x_coord += distance;
 			y_coord += distance;
+			break;
 		}
-		if (x_coord <1){
-			x_coord = 1;
-		}
-		else if(x_coord > Params.world_width){
-			x_coord = Params.world_width -1;
-		}
-		if (y_coord <1){
-			y_coord = 1;
-		}
-		else if(y_coord > Params.world_height){
-			y_coord = Params.world_height -1;
-		}
+//		if (x_coord <1){
+//			x_coord = 1;
+//		}
+//		else if(x_coord > Params.world_width){
+//			x_coord = Params.world_width -1;
+//		}
+//		if (y_coord <1){
+//			y_coord = 1;
+//		}
+//		else if(y_coord > Params.world_height){
+//			y_coord = Params.world_height -1;
+//		}
+		x_coord=x_coord%Params.world_width;
+		y_coord=y_coord%Params.world_height;
 	}
 	protected final void walk(int direction) {
 
@@ -107,7 +111,7 @@ public abstract class Critter {
 			return;
 		}
 		offspring.energy = energy/2;
-		energy = energy/2;
+		energy = energy/2 + energy%2;
 		offspring.x_coord = x_coord;
 		offspring.y_coord = y_coord;
 		change_coord(direction,1);
@@ -159,8 +163,18 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
-		List<Critter> result = new java.util.ArrayList<Critter>();
-	
+		List<Critter> result = new ArrayList<Critter>();
+		Class<?> newClass;
+		try{
+			newClass=Class.forName(critter_class_name);
+			for (Critter c : population){
+				if (c.getClass().equals(newClass))
+					result.add(c);
+			}
+		}catch(ClassNotFoundException e){
+			throw new InvalidCritterException(critter_class_name);
+		}
+			
 		return result;
 	}
 	
