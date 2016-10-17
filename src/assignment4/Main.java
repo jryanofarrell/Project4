@@ -68,49 +68,79 @@ public class Main {
 
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
+        
         while(true){
         	System.out.print("Command: ");
-	        String input = kb.next();
-	        if(input.equals("quit")){
+	        String input = kb.nextLine();
+	        String[] splitted = input.split("\\s+");
+	        String command,second_arg="",third_arg="";
+	        command = splitted[0];
+	        if(splitted.length >=2){
+	        	second_arg = splitted[1];
+	        }
+	        if(splitted.length >=3){
+	        	third_arg = splitted[2];
+	        }
+	        if(command.equals("quit")){
 	        	System.exit(0);
 	        }
-	        else if(input.equals("show")){
+	        else if(command.equals("show")){
 	        	Critter.displayWorld();
 	        }
-	        else if(input.equals("step")){
+	        else if(command.equals("step")){
 	        	int steps = 1;
-	        	if(kb.hasNextInt()){
-	        		steps = kb.nextInt();
+	        	if(!second_arg.equals("")){
+	        		try{
+	        			steps = Integer.parseInt(second_arg);
+	        		}catch(NumberFormatException e){
+	        			e.printStackTrace();
+	        			//System.out.println();
+	        		}
 	        	}
 	        	for(int i = 0; i<steps; i++){
 	        		Critter.worldTimeStep();
 	        	}
 	        }
-	        else if(input.equals("seed")){
-	        	int seed = kb.nextInt();
-	        	Critter.setSeed(seed);
+	        else if(command.equals("seed")){
+	        	int seed;
+        		try{
+        			seed = Integer.parseInt(second_arg);
+        			Critter.setSeed(seed);
+        		}catch(NumberFormatException e){
+        			e.printStackTrace();
+        			//System.out.println();
+        		}
+        	
+	        	
 	        }
-	        else if(input.equals("make")){
+	        else if(command.equals("make")){
 	        	int num_critters = 1;
-	        	String critter = kb.next();
-	        	if(kb.hasNextInt()){
-	        		num_critters = kb.nextInt();
+	        	String critter = second_arg;
+	        	if(!third_arg.equals("")){
+	        		try{
+	        			num_critters = Integer.parseInt(third_arg);
+	        		}catch(NumberFormatException e){
+	        			e.printStackTrace();
+	        			//System.out.println();
+	        		}
 	        	}
 	        	for (int i = 0; i<num_critters; i++){
 	        		try {
 						Critter.makeCritter(critter);
 					} catch (InvalidCritterException e) {
 						e.printStackTrace();
+						//System.out.println();
 					}
 	        	}
 	        }
 	       // System.out.println("test");
-	        else if(input.equals("stats")){
-	        	String class_name = kb.next();
+	        else if(command.equals("stats")){
+	        	String class_name = second_arg;
 	        	try {
 					Critter.getInstances(class_name);
 				} catch (InvalidCritterException e) {
 					e.printStackTrace();
+					//System.out.println();
 				}
 	        }
 	        System.out.println("\n");
