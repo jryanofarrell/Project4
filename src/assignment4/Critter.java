@@ -337,10 +337,15 @@ public abstract class Critter {
 		for(Critter c:population){
 			world[c.x_coord][c.y_coord] = c.toString();
 		}
-		for(int i = 0;i<Params.world_width+2;i++){
-			for(int j = 0;j<Params.world_height+2;j++){
-				System.out.println(world[i][j]);
+		for(int i = 0;i<Params.world_height+2;i++){
+			for(int j = 0;j<Params.world_width+2;j++){
+				if(world[j][i] == null){
+					System.out.print(" ");
+					continue;
+				}
+				System.out.print(world[j][i]);
 			}
+			System.out.println();
 		}
 
 	}
