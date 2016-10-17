@@ -335,16 +335,17 @@ public abstract class Critter {
 			world[Params.world_width +1][i] = "|";
 		}
 		world[0][0] ="+";
-		world[0][Params.world_height +2] ="+";
-		world[Params.world_width +2][0] ="+";
-		world[Params.world_width +2][Params.world_height +2] ="+";
+		world[0][Params.world_height +1] ="+";
+		world[Params.world_width +1][0] ="+";
+		world[Params.world_width +1][Params.world_height +1] ="+";
 		for(Critter c:population){
-			world[c.x_coord+1][c.y_coord+1] = c.toString();
+			world[c.x_coord][c.y_coord] = c.toString();
 		}
-		for(int i = 0;i<Params.world_width+2;i++){
-			for(int j = 0;j<Params.world_height+2;j++){
-				System.out.println(world[i][j]);
+		for(int i = 0;i<Params.world_height+2;i++){
+			for(int j = 0;j<Params.world_width+2;j++){
+				System.out.print(world[j][i]);
 			}
+			System.out.println();
 		}
 
 	}
