@@ -135,7 +135,7 @@ public abstract class Critter {
 		//Object newCritterObject;
 		Class<?> newCritterObject;
 		try{
-			newCritterObject = Class.forName(myPackage+"."+critter_class_name);
+			newCritterObject = Class.forName(critter_class_name);
 		}catch(ClassNotFoundException e){
 			throw new InvalidCritterException(critter_class_name);
 		}
