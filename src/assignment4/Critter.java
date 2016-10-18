@@ -80,20 +80,11 @@ public abstract class Critter {
 			y_coord += distance;
 			break;
 		}
-//		if (x_coord <1){
-//			x_coord = 1;
-//		}
-//		else if(x_coord > Params.world_width){
-//			x_coord = Params.world_width -1;
-//		}
-//		if (y_coord <1){
-//			y_coord = 1;
-//		}
-//		else if(y_coord > Params.world_height){
-//			y_coord = Params.world_height -1;
-//		}
-		x_coord=x_coord%Params.world_width;
-		y_coord=y_coord%Params.world_height;
+
+		x_coord=(x_coord+Params.world_width)%Params.world_width;
+
+		y_coord=(y_coord+Params.world_height)%Params.world_height;
+		
 	}
 	
 	private boolean canWalk=true;
@@ -140,22 +131,26 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
-		//Object newCritterObject;
+		if(critter_class_name.length() >1 ){
+			critter_class_name = (critter_class_name.charAt(0)+"").toUpperCase()+critter_class_name.substring(1).toLowerCase();
+		}
+		else{
+			critter_class_name = (critter_class_name.charAt(0)+"").toUpperCase();
+		}//remove before turning in
 		Class<?> newCritterObject;
 		try{
-			newCritterObject = Class.forName(myPackage+"."+critter_class_name);
+			newCritterObject = Class.forName(myPackage +"."+ critter_class_name);
 		}catch(ClassNotFoundException e){
+			System.out.print("here");
 			throw new InvalidCritterException(critter_class_name);
 		}
 		Critter newCritter = null;
 		try {
 			newCritter = (Critter) newCritterObject.newInstance();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new InvalidCritterException(critter_class_name);
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new InvalidCritterException(critter_class_name);
 		}
 		newCritter.x_coord = Critter.getRandomInt(Params.world_width);
 		newCritter.y_coord = Critter.getRandomInt(Params.world_height);
@@ -303,8 +298,7 @@ public abstract class Critter {
 					boolean Afight = A.fight(B.toString());
 					boolean Bfight = B.fight(A.toString());
 					if (A.isAlive() && B.isAlive() && A.samePosition(B)){
-						int Adice = 0;
-						int Bdice = 0;
+						int Adice=0,Bdice = 0;
 						if(Afight){
 							Adice = Critter.getRandomInt(A.getEnergy());
 						}
@@ -347,10 +341,14 @@ public abstract class Critter {
 		world[Params.world_width +1][0] ="+";
 		world[Params.world_width +1][Params.world_height +1] ="+";
 		for(Critter c:population){
-			world[c.x_coord][c.y_coord] = c.toString();
+			world[c.x_coord+1][c.y_coord+1] = c.toString();
 		}
 		for(int i = 0;i<Params.world_height+2;i++){
 			for(int j = 0;j<Params.world_width+2;j++){
+				if(world[j][i] == null){
+					System.out.print(" ");
+					continue;
+				}
 				System.out.print(world[j][i]);
 			}
 			System.out.println();
