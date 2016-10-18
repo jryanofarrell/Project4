@@ -11,9 +11,14 @@
  * Fall 2016
  */
 package assignment4; // cannot be in default package
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Scanner;
-import java.io.*;
 
 
 /*
@@ -150,7 +155,42 @@ public class Main {
 					e.printStackTrace();
 					//System.out.println();
 				}
-	        	Critter.runStats(critter_list);
+	        	//Class<?>[] types = {critter_list.class};
+	        	Class<?> newCritterClass = null;
+	        	Method method = null;
+	        	
+	    		try{
+	    			newCritterClass = Class.forName(myPackage +"."+ class_name);
+	    			
+	    		}catch(ClassNotFoundException e){
+	    			//throw new InvalidCritterException(class_name);
+	    		} 
+	    		Class<?>[] types = {List.class};
+	    		try{
+	    			method = newCritterClass.getMethod("runStats",types);
+	    		}catch (NoSuchMethodException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		try {
+					method.invoke(newCritterClass, critter_list);
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		
+	    		
+	    		
+	        	//Critter.runStats(critter_list);
 	        }
 	        System.out.println("\n");
         }
