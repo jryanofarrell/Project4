@@ -88,7 +88,7 @@ public abstract class Critter {
 	}
 	
 	private boolean canWalk=true;
-	protected void resetWalk(){
+	private void resetWalk(){
 		canWalk=true;
 	}
 	protected final void walk(int direction) {
@@ -288,6 +288,7 @@ public abstract class Critter {
 			population.add(c);
 		}
 		for(Critter c : population){
+			c.resetWalk();
 			c.doTimeStep();
 		}
 		for(int i = 0; i<population.size(); i++){
