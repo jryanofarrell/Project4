@@ -46,7 +46,6 @@ public abstract class Critter {
 	
 	private int energy = 0;
 	protected int getEnergy() { return energy; }
-	
 	private int x_coord;
 	private int y_coord;
 	private void change_coord(int direction,int distance){
