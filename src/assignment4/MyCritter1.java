@@ -4,7 +4,7 @@ public class MyCritter1 extends Critter.TestCritter {
 	private boolean diag=true;
 	@Override
 	public void doTimeStep() {
-		resetWalk();
+
 		if (diag)
 			walk(Critter.getRandomInt(3)*2+1); 	//the critter walks on diagonals
 		else
