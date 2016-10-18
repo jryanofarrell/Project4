@@ -11,6 +11,7 @@
  * Fall 2016
  */
 package assignment4; // cannot be in default package
+import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 
@@ -74,7 +75,7 @@ public class Main {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-        
+        //myPackage = Critter.class.getPackage().toString().split(" ")[1];
         while(true){
         	System.out.print("Command: ");
 	        String input = kb.nextLine();
@@ -142,12 +143,14 @@ public class Main {
 	       // System.out.println("test");
 	        else if(command.equals("stats")){
 	        	String class_name = second_arg;
+	        	List<Critter> critter_list = null; 
 	        	try {
-					Critter.getInstances(class_name);
+					critter_list = Critter.getInstances(myPackage + "."+ class_name);
 				} catch (InvalidCritterException e) {
 					e.printStackTrace();
 					//System.out.println();
 				}
+	        	Critter.runStats(critter_list);
 	        }
 	        System.out.println("\n");
         }
