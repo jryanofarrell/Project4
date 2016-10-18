@@ -95,15 +95,23 @@ public abstract class Critter {
 		x_coord=x_coord%Params.world_width;
 		y_coord=y_coord%Params.world_height;
 	}
+	
+	private boolean canWalk=true;
+	protected void resetWalk(){
+		canWalk=true;
+	}
 	protected final void walk(int direction) {
-
-		change_coord(direction,1);
+		if (canWalk)
+			change_coord(direction,1);
 		energy -= Params.walk_energy_cost;
+		canWalk=false;
 	}
 	
 	protected final void run(int direction) {
-		change_coord(direction,2);
+		if (canWalk)
+			change_coord(direction,2);
 		energy = Params.run_energy_cost; 
+		canWalk=false;
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {

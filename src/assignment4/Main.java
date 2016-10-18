@@ -68,7 +68,6 @@ public class Main {
 
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
-        System.out.println(82%80);
         try {
 			Critter.makeCritter("Craig");
 		} catch (InvalidCritterException e1) {
