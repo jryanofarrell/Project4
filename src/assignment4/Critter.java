@@ -270,7 +270,11 @@ public abstract class Critter {
 	}
 	public static void clearWorld() {
 	}
-	
+	/**
+	 * Do a time step for every critter in the world,
+	 * then do a fight between the critters that are in the same position
+	 * 
+	 */
 	public static void worldTimeStep() {
 		for(Critter c : babies){
 			population.add(c);
@@ -283,9 +287,8 @@ public abstract class Critter {
 			for(int j = i+1; j<population.size(); j++){
 				Critter B = population.get(j);
 				if(A.samePosition(B)){
-					boolean Afight,Bfight;
-					Afight = A.fight(B.toString());
-					Bfight = B.fight(A.toString());
+					boolean Afight = A.fight(B.toString());
+					boolean Bfight = B.fight(A.toString());
 					if (A.isAlive() && B.isAlive() && A.samePosition(B)){
 						int Adice=0,Bdice = 0;
 						if(Afight){
@@ -303,7 +306,6 @@ public abstract class Critter {
 					}
 				}
 			}
-			
 		}
 		for(int i = 0; i<population.size(); i++){
 			Critter c = population.get(i);
@@ -314,6 +316,7 @@ public abstract class Critter {
 				population.remove(population.size()-1); 
 			}
 		}
+		// TODO reproduction step
 	}
 	public static void displayWorld() {
 		String[][] world = new String[Params.world_width+2][Params.world_height+2];
