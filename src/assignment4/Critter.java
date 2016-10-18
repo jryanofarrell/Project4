@@ -284,6 +284,12 @@ public abstract class Critter {
 	 * 
 	 */
 	public static void worldTimeStep() {
+		try {
+			for (int i=0;i<Params.refresh_algae_count;i++)
+				makeCritter("Algae");
+		} catch (InvalidCritterException e) {
+			e.printStackTrace();
+		}
 		for(Critter c : babies){
 			population.add(c);
 		}
