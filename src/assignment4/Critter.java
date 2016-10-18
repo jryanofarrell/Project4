@@ -48,6 +48,7 @@ public abstract class Critter {
 	protected int getEnergy() { return energy; }
 	private int x_coord;
 	private int y_coord;
+	private boolean isFighting=false;
 	private void change_coord(int direction,int distance){
 		switch(direction){
 		case 0 :
@@ -294,7 +295,9 @@ public abstract class Critter {
 			for(int j = i+1; j<population.size(); j++){
 				Critter B = population.get(j);
 				if(A.samePosition(B)){
+					A.isFighting=true;
 					boolean Afight = A.fight(B.toString());
+					B.isFighting=true;
 					boolean Bfight = B.fight(A.toString());
 					if (A.isAlive() && B.isAlive() && A.samePosition(B)){
 						int Adice=0,Bdice = 0;
@@ -311,6 +314,8 @@ public abstract class Critter {
 							A.transferEnergy(B);
 						}
 					}
+					A.isFighting=false;
+					B.isFighting=false;
 				}
 			}
 		}
