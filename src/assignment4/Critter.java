@@ -265,10 +265,14 @@ public abstract class Critter {
 	/**
 	 * Clear the world of all critters, dead and alive
 	 */
-	private void transferEnergy(Critter B){
+	private void absorbsEnergy(Critter B){
 		energy += B.getEnergy()/2;
-		B.energy=0;
+		B.die();
 	}
+	private void die() {
+		population.remove(this);
+	}
+
 
 	private boolean samePosition(Critter B){
 		return x_coord == B.x_coord && y_coord == B.y_coord;
@@ -314,10 +318,10 @@ public abstract class Critter {
 							Bdice = Critter.getRandomInt(B.getEnergy());
 						}
 						if(Bdice > Adice){
-							B.transferEnergy(A);
+							B.absorbsEnergy(A);
 						}
 						else{
-							A.transferEnergy(B);
+							A.absorbsEnergy(B);
 						}
 					}
 					A.isFighting=false;
@@ -329,13 +333,11 @@ public abstract class Critter {
 			Critter c = population.get(i);
 			c.energy -= Params.rest_energy_cost;
 			if(!c.isAlive()){
-				Critter x = population.get(population.size() - 1);
-				population.set(i, x);
-				population.remove(population.size()-1); 
+				c.die();
 			}
 		}
-		// TODO reproduction step
 	}
+
 	public static void displayWorld() {
 		String[][] world = new String[Params.world_width+2][Params.world_height+2];
 		for(int i = 1; i<Params.world_width+1; i++){
