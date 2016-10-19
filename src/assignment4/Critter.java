@@ -297,12 +297,16 @@ public abstract class Critter {
 		for(Critter c : babies){
 			population.add(c);
 		}
-		for(Critter c : population){
-			c.doTimeStep();
-		}
+//		for(Critter c : population){
+//			c.doTimeStep();
+		
 		for(int i = 0; i<population.size(); i++){
 			Critter A = population.get(i);
-			for(int j = i+1; j<population.size(); j++){
+			A.doTimeStep();
+			for(int j = 0; j<population.size(); j++){
+				if(j==i){
+					continue;
+				}
 				Critter B = population.get(j);
 				if(A.samePosition(B)){
 					A.isFighting=true;
