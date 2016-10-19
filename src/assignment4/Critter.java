@@ -139,12 +139,12 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
-		if(critter_class_name.length() >1 ){
-			critter_class_name = (critter_class_name.charAt(0)+"").toUpperCase()+critter_class_name.substring(1).toLowerCase();
-		}
-		else{
-			critter_class_name = (critter_class_name.charAt(0)+"").toUpperCase();
-		}//remove before turning in
+//		if(critter_class_name.length() >1 ){
+//			critter_class_name = (critter_class_name.charAt(0)+"").toUpperCase()+critter_class_name.substring(1).toLowerCase();
+//		}
+//		else{
+//			critter_class_name = (critter_class_name.charAt(0)+"").toUpperCase();
+//		}//remove before turning in
 		Class<?> newCritterObject;
 		try{
 			newCritterObject = Class.forName(myPackage +"."+ critter_class_name);
