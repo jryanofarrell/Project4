@@ -25,7 +25,6 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new ArrayList<Critter>();
 	private static List<Critter> babies = new ArrayList<Critter>();
-
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
 		myPackage = Critter.class.getPackage().toString().split(" ")[1];
@@ -80,10 +79,19 @@ public abstract class Critter {
 			y_coord += distance;
 			break;
 		}
+		int newX,newY;
 
-		x_coord=(x_coord+Params.world_width)%Params.world_width;
-
-		y_coord=(y_coord+Params.world_height)%Params.world_height;
+		newX=(x_coord+Params.world_width)%Params.world_width;
+		newY=(y_coord+Params.world_height)%Params.world_height;
+		if(isFighting){
+			for(Critter c :population){
+				if(c.x_coord == newX && c.y_coord == newY){
+					return;
+				}
+			}
+		}
+		x_coord = newX;
+		y_coord = newY;
 		
 	}
 	
