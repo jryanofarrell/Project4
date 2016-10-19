@@ -1,7 +1,7 @@
 package assignment4;
 
 /*
- * Example critter
+ * Critter that only goes in one direction
  */
 public class MyCritter3 extends Critter {
 	
@@ -13,10 +13,8 @@ public class MyCritter3 extends Critter {
 	private int dir;
 	
 	public MyCritter3() {
-		for (int k = 0; k < 8; k += 1) {
-			genes[k] = GENE_TOTAL / 8;
-		}
 		dir = Critter.getRandomInt(8);
+		genes[dir] = GENE_TOTAL;
 	}
 	
 	public boolean fight(String opponent) { return true; }
@@ -28,29 +26,16 @@ public class MyCritter3 extends Critter {
 		
 		if (getEnergy() > 150) {
 			MyCritter3 child = new MyCritter3();
+			int g;
 			for (int k = 0; k < 8; k += 1) {
-				child.genes[k] = this.genes[k];
+				child.genes[k] = 0;
 			}
-			int g = Critter.getRandomInt(8);
-			while (child.genes[g] == 0) {
-				g = Critter.getRandomInt(8);
-			}
-			child.genes[g] -= 1;
 			g = Critter.getRandomInt(8);
-			child.genes[g] += 1;
+			child.genes[g] += GENE_TOTAL;
+			child.dir = g;
 			reproduce(child, Critter.getRandomInt(8));
 		}
 		
-		/* pick a new direction based on our genes */
-		int roll = Critter.getRandomInt(GENE_TOTAL);
-		int turn = 0;
-		while (genes[turn] <= roll) {
-			roll = roll - genes[turn];
-			turn = turn + 1;
-		}
-		assert(turn < 8);
-		
-		dir = (dir + turn) % 8;
 	}
 
 	public static void runStats(java.util.List<Critter> craigs) {
