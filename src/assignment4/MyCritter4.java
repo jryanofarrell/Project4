@@ -11,33 +11,50 @@ public class MyCritter4 extends Critter {
 	private static final int GENE_TOTAL = 24;
 	private int[] genes = new int[8];
 	private int dir;
-	
+
 	public MyCritter4() {
 		for (int k = 0; k < 8; k += 1) {
-			genes[k] = GENE_TOTAL / 8;
+			genes[k] = GENE_TOTAL/8;
 		}
 		dir = Critter.getRandomInt(8);
 	}
 	
-	public boolean fight(String opponent) { return true; }
+	public boolean fight(String opponent) { if(opponent.equals("algae"))return true; 
+	run(dir);
+	return false;
+			}
 
 	@Override
 	public void doTimeStep() {
 		/* take one step forward */
-		walk(dir);
-		
-		if (getEnergy() > 150) {
+		run(dir);
+		if (getEnergy() > 100) {
 			MyCritter4 child = new MyCritter4();
+			int num_variation = 0; 
 			for (int k = 0; k < 8; k += 1) {
 				child.genes[k] = this.genes[k];
+				if (this.genes[k] >0){
+					num_variation ++;
+				}
 			}
 			int g = Critter.getRandomInt(8);
-			while (child.genes[g] == 0) {
+			int h = Critter.getRandomInt(8);
+			while (child.genes[g] == 0 && child.genes[g] == 0 && child.genes[h] == 0&& !(g==h)) {
 				g = Critter.getRandomInt(8);
+				h = Critter.getRandomInt(8);
+				if (num_variation <2 && !(child.genes[g] ==0)){
+					break;
+				}
 			}
+			
 			child.genes[g] -= 1;
 			g = Critter.getRandomInt(8);
 			child.genes[g] += 1;
+			if(num_variation>1){
+				child.genes[h]--;
+				g = Critter.getRandomInt(8);
+				child.genes[g] += 1;
+			}
 			reproduce(child, Critter.getRandomInt(8));
 		}
 		
