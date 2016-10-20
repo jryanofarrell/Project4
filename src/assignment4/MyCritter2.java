@@ -1,26 +1,44 @@
 package assignment4;
 
+import java.util.List;
+
 /*
- * This Critter is good for testing running away while fighting, and for testing 
- * movement in different directions.
+ *This critter is a magician but not really powerful, he increases his magic by eating algae, he has to use magic to fight. 
+ *it doesn't reproduce, instead if he has enough magic he can use it create one of his kind. If wins against another magician, he triples his magic
  */
 public class MyCritter2 extends MyCritter1 {
 	
-	private int myDir = 0;
+	private int magic=5;
 	
+	//
 	@Override
 	public void doTimeStep () {
-		walk(myDir);
-		myDir = (myDir+1)%8; // change direction each walk call, CCW.
+		if (magic>=10){
+			try {
+				Critter.makeCritter("MyCritter2");
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
+			}
+			magic-=10;
+		}
 	}
 	
-	@Override
-	/**
-	 * Never fights, but always tries to run away.
-	 */
+	
+	
 	public boolean fight(String opp) {
-		run(myDir);
-		return false;
+		if (opp.toString().equals("2")){
+			magic= (magic>3)?(magic*3):(magic+3);
+			return true;
+			}else if (opp.toString().equals("@")){
+				magic +=2;
+				return true;
+			}else{
+				if(magic>0){
+					magic--;
+					return true;
+				}else
+					return false;
+			}
 	}
 	
 	public String toString() {
