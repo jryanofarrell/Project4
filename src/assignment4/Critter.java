@@ -296,14 +296,11 @@ public abstract class Critter {
 	 */
 	private void absorbsEnergy(Critter B){
 		energy += B.getEnergy()/2;
-<<<<<<< HEAD
 		B.energy = 0; 
-=======
-		B.die();
+
 	}
 	private void die() {
-		population.remove(index);
->>>>>>> origin/master
+		return;
 	}
 //	private void die() {
 //		System.out.println(this.toString());
@@ -344,15 +341,11 @@ public abstract class Critter {
 			c.index=population.size()-1;
 		}
 		babies.clear();
-<<<<<<< HEAD
 		for(Critter c: population){
 			c.resetWalk();
 			c.doTimeStep();
 		}
-=======
-//		for(Critter c : population){
-//			c.doTimeStep();
->>>>>>> origin/master
+
 		
 		for(int i = 0; i<population.size(); i++){
 			for(int j = i+1; j<population.size(); j++){
