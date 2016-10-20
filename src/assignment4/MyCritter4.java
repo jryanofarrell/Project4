@@ -52,7 +52,7 @@ public class MyCritter4 extends Critter {
 			child.genes[g] += 1;
 			if(num_variation>1){
 				child.genes[h]--;
-				g = Critter.getRandomInt(8);
+				//g = Critter.getRandomInt(8);
 				child.genes[g] += 1;
 			}
 			reproduce(child, Critter.getRandomInt(8));
@@ -82,7 +82,7 @@ public class MyCritter4 extends Critter {
 			total_back += c.genes[4];
 			total_left += c.genes[5] + c.genes[6] + c.genes[7];
 		}
-		System.out.print("" + my4s.size() + " total MyCritter3s    ");
+		System.out.print("" + my4s.size() + " total MyCritter4s    ");
 		System.out.print("" + total_straight / (GENE_TOTAL * 0.01 * my4s.size()) + "% straight   ");
 		System.out.print("" + total_back / (GENE_TOTAL * 0.01 * my4s.size()) + "% back   ");
 		System.out.print("" + total_right / (GENE_TOTAL * 0.01 * my4s.size()) + "% right   ");

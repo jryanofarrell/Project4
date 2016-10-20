@@ -49,40 +49,43 @@ public abstract class Critter {
 	private int y_coord;
 	private boolean isFighting=false;
 	private void change_coord(int direction,int distance){
+		int newX,newY;
+		newX = x_coord;
+		newY = y_coord;
 		switch(direction){
 		case 0 :
-			x_coord += distance;
+			newX += distance;
 			break;
 		case 1:
-			x_coord += distance;
-			y_coord -= distance;
+			newX += distance;
+			newY -= distance;
 			break;
 		case 2:
-			y_coord -= distance;
+			newY -= distance;
 			break;
 		case 3:
-			x_coord -= distance;
-			y_coord -= distance;
+			newX -= distance;
+			newY -= distance;
 			break;
 		case 4 :
-			x_coord -= distance;
+			newY -= distance;
 			break;
 		case 5 :
-			x_coord -= distance;
-			y_coord += distance;
+			newX -= distance;
+			newY += distance;
 			break;
 		case 6:
-			y_coord += distance;
+			newY += distance;
 			break;
 		case 7 :
-			x_coord += distance;
-			y_coord += distance;
+			newX += distance;
+			newY += distance;
 			break;
 		}
-		int newX,newY;
+		
 
-		newX=(x_coord+Params.world_width)%Params.world_width;
-		newY=(y_coord+Params.world_height)%Params.world_height;
+		
+		//System.out.println(isFighting);
 		if(isFighting){
 			for(Critter c :population){
 				if(c.x_coord == newX && c.y_coord == newY){
@@ -90,8 +93,12 @@ public abstract class Critter {
 				}
 			}
 		}
+		newX=(newX+Params.world_width)%Params.world_width;
+		newY=(newY+Params.world_height)%Params.world_height;
+		//System.out.println(x_coord + " " +y_coord);
 		x_coord = newX;
 		y_coord = newY;
+		//System.out.println(x_coord + " " +y_coord);
 		
 	}
 	
@@ -100,6 +107,7 @@ public abstract class Critter {
 		canWalk=true;
 	}
 	protected final void walk(int direction) {
+		//System.out.println(canWalk);
 		if (canWalk)
 			change_coord(direction,1);
 		energy -= Params.walk_energy_cost;
@@ -107,9 +115,10 @@ public abstract class Critter {
 	}
 	
 	protected final void run(int direction) {
+		//System.out.println(canWalk);
 		if (canWalk)
 			change_coord(direction,2);
-		energy = Params.run_energy_cost; 
+		energy -= Params.run_energy_cost; 
 		canWalk=false;
 	}
 	
@@ -303,10 +312,10 @@ public abstract class Critter {
 			e.printStackTrace();
 		}
 		for(Critter c : babies){
+			System.out.println("dying");
 			population.add(c);
 		}
-//		for(Critter c : population){
-//			c.doTimeStep();
+
 		
 		for(int i = 0; i<population.size(); i++){
 			Critter A = population.get(i);
@@ -340,6 +349,7 @@ public abstract class Critter {
 					B.isFighting=false;
 				}
 			}
+			
 		}
 		for(int i = 0; i<population.size(); i++){
 			Critter c = population.get(i);
@@ -347,6 +357,7 @@ public abstract class Critter {
 			if(!c.isAlive()){
 				c.die();
 			}
+			c.resetWalk();
 		}
 	}
 
