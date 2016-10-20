@@ -13,7 +13,6 @@
 package assignment4;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /* see the PDF for descriptions of the methods and fields in this class
@@ -23,12 +22,9 @@ import java.util.List;
 
 
 public abstract class Critter {
-	private static int reproduce_num = 0;
-	private static int die_num = 0;
 	private static String myPackage;
 	private	static List<Critter> population = new ArrayList<Critter>();
 	private static List<Critter> babies = new ArrayList<Critter>();
-	private int index;
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -141,7 +137,7 @@ public abstract class Critter {
 		offspring.y_coord = y_coord;
 		change_coord(direction,1);
 		babies.add(offspring);
-		reproduce_num ++;
+//		reproduce_num ++;
 		
 	}
 
@@ -184,8 +180,6 @@ public abstract class Critter {
 		newCritter.y_coord = Critter.getRandomInt(Params.world_height);
 		newCritter.energy = Params.start_energy;
 		population.add(newCritter);
-		newCritter.index=population.size()-1;
-		
 	}
 	
 	/**
@@ -299,9 +293,7 @@ public abstract class Critter {
 		B.energy = 0; 
 
 	}
-	private void die() {
-		return;
-	}
+
 //	private void die() {
 //		System.out.println(this.toString());
 //		if(this.toString().equals("@")){
@@ -338,7 +330,6 @@ public abstract class Critter {
 		for(Critter c : babies){
 			//System.out.println("dying");
 			population.add(c);
-			c.index=population.size()-1;
 		}
 		babies.clear();
 		for(Critter c: population){
