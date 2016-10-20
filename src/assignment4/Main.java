@@ -83,9 +83,10 @@ public class Main {
         //myPackage = Critter.class.getPackage().toString().split(" ")[1];
         
         boolean invalid;
-        while(true){
+        boolean flag = true;
+        while(flag){
         	invalid =false;
-        	System.out.print("Command: ");
+        	//System.out.print("Command: ");
 	        String input = kb.nextLine();
 	        String[] splitted = input.split("\\s+");
 	        String command,second_arg="",third_arg="";
@@ -97,7 +98,7 @@ public class Main {
 	        	third_arg = splitted[2];
 	        }
 	        if(command.equals("quit")){
-	        	System.exit(0);
+	        	flag = false;
 	        }
 	        else if(command.equals("show")){
 	        	Critter.displayWorld();
@@ -141,6 +142,10 @@ public class Main {
 	        		}
 	        	}
 	        	for (int i = 0; i<num_critters; i++){
+	        		if((i+1)%1000 == 0){
+	        			i++;
+	        			i--;
+	        		}
 	        		try {
 						Critter.makeCritter(critter);
 					} catch (InvalidCritterException e) {
@@ -199,7 +204,7 @@ public class Main {
 	        	//Critter.runStats(critter_list);
 	        }else
 	        	System.out.println("Invalid command : " + input);
-	        System.out.println();
+	        //System.out.println();
         }
         /* Write your code above */
         //System.out.flush();
