@@ -46,6 +46,9 @@ public class Main {
      * @param args args can be empty.  If not empty, provide two parameters -- the first is a file name, 
      * and the second is test (for test output, where all output to be directed to a String), or nothing.
      */
+    private static void printError(String input){
+    	System.out.println("error processing: " + input);
+    }
     public static void main(String[] args) { 
         if (args.length != 0) {
             try {
@@ -87,6 +90,7 @@ public class Main {
         Critter.clearWorld();
         while(flag){
         	invalid =false;
+        	boolean error = false;
         	//System.out.print("Command: ");
 	        String input = kb.nextLine();
 	        String[] splitted = input.split("\\s+");
@@ -98,19 +102,35 @@ public class Main {
 	        if(splitted.length >=3){
 	        	third_arg = splitted[2];
 	        }
+	        if(splitted.length > 3){
+        		printError(input);
+        		continue;
+	        }
 	        if(command.equals("quit")){
+	        	if(!third_arg.equals("") || !second_arg.equals("")){
+	        		printError(input);
+	        		continue;
+        		}
 	        	flag = false;
 	        }
 	        else if(command.equals("show")){
+	        	if(!third_arg.equals("") || !second_arg.equals("")){
+	        		printError(input);
+	        		continue;
+        		}
 	        	Critter.displayWorld();
 	        }
 	        else if(command.equals("step")){
+	        	if(!third_arg.equals("")){
+	        		printError(input);
+	        		continue;
+        		}
 	        	int steps = 1;
 	        	if(!second_arg.equals("")){
 	        		try{
 	        			steps = Integer.parseInt(second_arg);
 	        		}catch(NumberFormatException e){
-	        			System.out.println("Invalid command : " + input);
+	        			printError(input);
 	        			continue;
 	        		}
 	        	}
@@ -119,15 +139,20 @@ public class Main {
 	        	}
 	        }
 	        else if(command.equals("seed")){
+	        	if(!third_arg.equals("")){
+	        		printError(input);
+	        		continue;
+        		}
 	        	int seed;
         		try{
         			seed = Integer.parseInt(second_arg);
         			Critter.setSeed(seed);
         		}catch(NumberFormatException e){
-        			System.out.println("Invalid command : " + input);
+        			printError(input);
         			continue;
         			//System.out.println();
         		}
+        		
         	
 	        	
 	        }
@@ -138,20 +163,16 @@ public class Main {
 	        		try{
 	        			num_critters = Integer.parseInt(third_arg);
 	        		}catch(NumberFormatException e){
-	        			System.out.println("Invalid command : " + input);
+	        			printError(input);
 	        			continue;
 	        		}
 	        	}
 	        	for (int i = 0; i<num_critters; i++){
-	        		if((i+1)%1000 == 0){
-	        			i++;
-	        			i--;
-	        		}
 	        		try {
 						Critter.makeCritter(critter);
 					} catch (InvalidCritterException e) {
 						//e.printStackTrace();
-						System.out.println("Invalid command : " + input);
+						printError(input);
 						continue;
 					}
 	        	}
@@ -160,11 +181,15 @@ public class Main {
 	        else if(command.equals("stats")){
 	        	String class_name = second_arg;
 	        	List<Critter> critter_list = null; 
+	        	if(!third_arg.equals("")){
+	        		printError(input);
+	        		continue;
+        		}
 	        	try {
 					critter_list = Critter.getInstances(myPackage + "."+ class_name);
 				} catch (InvalidCritterException e) {
 					//e.printStackTrace();
-					System.out.println("Invalid command : " + input);
+					printError(input);
 					continue;
 				}
 	        	//Class<?>[] types = {critter_list.class};
@@ -203,8 +228,10 @@ public class Main {
 	    		
 	    		
 	        	//Critter.runStats(critter_list);
-	        }else
-	        	System.out.println("Invalid command : " + input);
+	        }
+	        else{
+	        	printError(input);
+	        }
 	        //System.out.println();
         }
         /* Write your code above */
