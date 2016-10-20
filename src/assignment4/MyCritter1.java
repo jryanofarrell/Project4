@@ -1,6 +1,6 @@
 package assignment4;
 
-public class MyCritter1 extends Critter.TestCritter {
+public class MyCritter1 extends Critter {
 	private boolean diag=true;
 	@Override
 	public void doTimeStep() {
