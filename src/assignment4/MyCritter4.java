@@ -6,38 +6,54 @@ package assignment4;
 public class MyCritter4 extends Critter {
 	
 	@Override
-	public String toString() { return "C"; }
+	public String toString() { return "4"; }
 	
 	private static final int GENE_TOTAL = 24;
 	private int[] genes = new int[8];
 	private int dir;
-	
+
 	public MyCritter4() {
 		for (int k = 0; k < 8; k += 1) {
-			genes[k] = GENE_TOTAL / 8;
+			genes[k] = GENE_TOTAL/8;
 		}
 		dir = Critter.getRandomInt(8);
 	}
 	
-	public boolean fight(String opponent) { return true; }
+	public boolean fight(String opponent) { if(opponent.equals("@"))return true; 
+	run(dir);
+	return false;
+			}
 
 	@Override
 	public void doTimeStep() {
 		/* take one step forward */
-		walk(dir);
-		
-		if (getEnergy() > 150) {
+		if (getEnergy() > 100) {
 			MyCritter4 child = new MyCritter4();
+			int num_variation = 0; 
 			for (int k = 0; k < 8; k += 1) {
 				child.genes[k] = this.genes[k];
+				if (this.genes[k] >0){
+					num_variation ++;
+				}
 			}
 			int g = Critter.getRandomInt(8);
-			while (child.genes[g] == 0) {
+			int h = Critter.getRandomInt(8);
+			while (child.genes[g] == 0 && child.genes[g] == 0 && child.genes[h] == 0&& !(g==h)) {
 				g = Critter.getRandomInt(8);
+				h = Critter.getRandomInt(8);
+				if (num_variation <2 && !(child.genes[g] ==0)){
+					break;
+				}
 			}
+			
 			child.genes[g] -= 1;
 			g = Critter.getRandomInt(8);
 			child.genes[g] += 1;
+			if(num_variation>1){
+				child.genes[h]--;
+				//g = Critter.getRandomInt(8);
+				child.genes[g] += 1;
+			}
 			reproduce(child, Critter.getRandomInt(8));
 		}
 		
@@ -53,23 +69,23 @@ public class MyCritter4 extends Critter {
 		dir = (dir + turn) % 8;
 	}
 
-	public static void runStats(java.util.List<Critter> craigs) {
+	public static void runStats(java.util.List<Critter> my4s) {
 		int total_straight = 0;
 		int total_left = 0;
 		int total_right = 0;
 		int total_back = 0;
-		for (Object obj : craigs) {
+		for (Object obj : my4s) {
 			MyCritter4 c = (MyCritter4) obj;
 			total_straight += c.genes[0];
 			total_right += c.genes[1] + c.genes[2] + c.genes[3];
 			total_back += c.genes[4];
 			total_left += c.genes[5] + c.genes[6] + c.genes[7];
 		}
-		System.out.print("" + craigs.size() + " total Craigs    ");
-		System.out.print("" + total_straight / (GENE_TOTAL * 0.01 * craigs.size()) + "% straight   ");
-		System.out.print("" + total_back / (GENE_TOTAL * 0.01 * craigs.size()) + "% back   ");
-		System.out.print("" + total_right / (GENE_TOTAL * 0.01 * craigs.size()) + "% right   ");
-		System.out.print("" + total_left / (GENE_TOTAL * 0.01 * craigs.size()) + "% left   ");
+		System.out.print("" + my4s.size() + " total MyCritter4s    ");
+		System.out.print("" + total_straight / (GENE_TOTAL * 0.01 * my4s.size()) + "% straight   ");
+		System.out.print("" + total_back / (GENE_TOTAL * 0.01 * my4s.size()) + "% back   ");
+		System.out.print("" + total_right / (GENE_TOTAL * 0.01 * my4s.size()) + "% right   ");
+		System.out.print("" + total_left / (GENE_TOTAL * 0.01 * my4s.size()) + "% left   ");
 		System.out.println();
 	}
 }
