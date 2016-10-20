@@ -314,6 +314,8 @@ public abstract class Critter {
 		return this.getEnergy() > 0;
 	}
 	public static void clearWorld() {
+		population.clear();
+		babies.clear();
 	}
 	/**
 	 * Do a time step for every critter in the world,

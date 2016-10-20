@@ -84,6 +84,7 @@ public class Main {
         
         boolean invalid;
         boolean flag = true;
+        Critter.clearWorld();
         while(flag){
         	invalid =false;
         	//System.out.print("Command: ");
