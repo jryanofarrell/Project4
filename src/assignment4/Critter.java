@@ -35,7 +35,10 @@ public abstract class Critter {
 	public static int getRandomInt(int max) {
 		return rand.nextInt(max);
 	}
-	
+	/**
+	 * sets seed for random numbers
+	 * @param new_seed seed number to set for random
+	 */
 	public static void setSeed(long new_seed) {
 		rand = new java.util.Random(new_seed);
 	}
@@ -49,6 +52,11 @@ public abstract class Critter {
 	private int x_coord;
 	private int y_coord;
 	private boolean isFighting=false;
+	/**
+	 * changes the critters coordinates
+	 * @param direction direction to change critter
+	 * @param distance distance to change critter
+	 */
 	private void change_coord(int direction,int distance){
 		int newX,newY;
 		newX = x_coord;
@@ -87,7 +95,7 @@ public abstract class Critter {
 
 		
 		//System.out.println(isFighting);
-		if(isFighting){
+		if(isFighting){							//sees if critter is fighting so doesnt move onto other critter
 			for(Critter c :population){
 				if(c.x_coord == newX && c.y_coord == newY){
 					return;
@@ -102,11 +110,17 @@ public abstract class Critter {
 		//System.out.println(x_coord + " " +y_coord);
 		
 	}
-	
+	/*
+	 * sees if critter is allowed to walk
+	 */
 	private boolean canWalk=true;
 	protected void resetWalk(){
 		canWalk=true;
 	}
+	/**
+	 * walks critter toward direction
+	 * @param direction to walk
+	 */
 	protected final void walk(int direction) {
 		//System.out.println(canWalk);
 		if (canWalk)
@@ -114,7 +128,10 @@ public abstract class Critter {
 		energy -= Params.walk_energy_cost;
 		canWalk=false;
 	}
-	
+	/**
+	 * runs critter toward direction
+	 * @param direction direction to run
+	 */
 	protected final void run(int direction) {
 		//System.out.println(canWalk);
 		if (canWalk)
@@ -122,12 +139,12 @@ public abstract class Critter {
 		energy -= Params.run_energy_cost; 
 		canWalk=false;
 	}
-	
+	/**
+	 * adds child critter to babies list
+	 * @param offspring child critter
+	 * @param direction directional location child is from parent
+	 */
 	protected final void reproduce(Critter offspring, int direction) {
-//		System.out.println("Reproduce");
-//		if(!this.toString().equals("@")){
-//			System.out.println(population.toString());
-//		}
 		if(energy < Params.min_reproduce_energy){
 			return;
 		}
@@ -286,7 +303,7 @@ public abstract class Critter {
 	}
 
 	/**
-	 * Clear the world of all critters, dead and alive
+	 * adds half of Bs energy to self and kills B
 	 */
 	private void absorbsEnergy(Critter B){
 		energy += B.getEnergy()/2;
@@ -294,25 +311,25 @@ public abstract class Critter {
 
 	}
 
-//	private void die() {
-//		System.out.println(this.toString());
-//		if(this.toString().equals("@")){
-//			population.remove(this);
-//			return;
-//		}
-//		System.out.println(population.size());
-//		population.remove(this);
-//		//population.remov
-//		System.out.println(population.size());
-//	}
 
-
+	/**
+	 * sees if critters are in same spot
+	 * @param B other critter
+	 * @return true if in same spot
+	 */
 	private boolean samePosition(Critter B){
 		return x_coord == B.x_coord && y_coord == B.y_coord;
 	}
+	/**
+	 * sees if critter is alive
+	 * @return true if is alive
+	 */
 	private boolean isAlive(){
 		return this.getEnergy() > 0;
 	}
+	/**
+	 * clears babies and population
+	 */
 	public static void clearWorld() {
 		population.clear();
 		babies.clear();
@@ -374,42 +391,15 @@ public abstract class Critter {
 			Critter c = population.get(i);
 			c.energy -= Params.rest_energy_cost;
 			if(!c.isAlive()){
-//				if(!temp_string.equals("@")){
-//					System.out.println("dying");
-//					System.out.println(population.toString());
-//				}
 				Critter j = population.get(population.size()-1);
-//				if(j.toString().equals(c.toString())&&!c.toString().equals("@")){
-//					System.out.println(population.toString());
-//				}
-//				System.out.println(j);
 				population.set(i, j);
 				population.remove(population.size() -1);
-//				if(j.toString().equals(c.toString())&&!c.toString().equals("@")){
-//					System.out.println(population.toString());
-//				}
-//				System.out.println(c);
-//				if(!temp_string.equals("@")){
-//					die_num ++;
-//					//System.out.println("dying " + die_num);
-//					if(die_num > reproduce_num){
-//						
-//						for(Critter b: population){
-//							if(!b.toString().equals("@")){
-//								System.out.print("!");
-//							}
-//						}
-//					}
-//				}
-//				if(!temp_string.equals("@")){
-//					System.out.println(i);
-//					System.out.println(population.toString());
-//				}
 			}
 		}
-//		System.out.println("end of step");
 	}
-
+	/**
+	 * prints the world
+	 */
 	public static void displayWorld() {
 		String[][] world = new String[Params.world_width+2][Params.world_height+2];
 		for(int i = 1; i<Params.world_width+1; i++){

@@ -42,13 +42,17 @@ public class Main {
     }
 
     /**
-     * Main method.
-     * @param args args can be empty.  If not empty, provide two parameters -- the first is a file name, 
-     * and the second is test (for test output, where all output to be directed to a String), or nothing.
+     * prints an error message
+     * @param input code that caused error
      */
     private static void printError(String input){
     	System.out.println("error processing: " + input);
     }
+    /**
+     * Main method.
+     * @param args args can be empty.  If not empty, provide two parameters -- the first is a file name, 
+     * and the second is test (for test output, where all output to be directed to a String), or nothing.
+     */
     public static void main(String[] args) { 
         if (args.length != 0) {
             try {
