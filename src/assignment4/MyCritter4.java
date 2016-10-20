@@ -19,7 +19,7 @@ public class MyCritter4 extends Critter {
 		dir = Critter.getRandomInt(8);
 	}
 	
-	public boolean fight(String opponent) { if(opponent.equals("algae"))return true; 
+	public boolean fight(String opponent) { if(opponent.equals("@"))return true; 
 	run(dir);
 	return false;
 			}
@@ -27,7 +27,6 @@ public class MyCritter4 extends Critter {
 	@Override
 	public void doTimeStep() {
 		/* take one step forward */
-		run(dir);
 		if (getEnergy() > 100) {
 			MyCritter4 child = new MyCritter4();
 			int num_variation = 0; 

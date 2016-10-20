@@ -73,13 +73,13 @@ public class Main {
         }
 
         /* Do not alter the code above for your submission. */
-        /* Write your code below. */
-        try {
-			Critter.makeCritter("Craig");
-		} catch (InvalidCritterException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//        /* Write your code below. */
+//        try {
+//			Critter.makeCritter("Craig");
+//		} catch (InvalidCritterException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
         //myPackage = Critter.class.getPackage().toString().split(" ")[1];
         while(true){
         	System.out.print("Command: ");

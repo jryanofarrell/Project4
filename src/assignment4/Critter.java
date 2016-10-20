@@ -13,6 +13,7 @@
 package assignment4;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /* see the PDF for descriptions of the methods and fields in this class
@@ -22,6 +23,8 @@ import java.util.List;
 
 
 public abstract class Critter {
+	private static int reproduce_num = 0;
+	private static int die_num = 0;
 	private static String myPackage;
 	private	static List<Critter> population = new ArrayList<Critter>();
 	private static List<Critter> babies = new ArrayList<Critter>();
@@ -123,6 +126,10 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+//		System.out.println("Reproduce");
+//		if(!this.toString().equals("@")){
+//			System.out.println(population.toString());
+//		}
 		if(energy < Params.min_reproduce_energy){
 			return;
 		}
@@ -132,6 +139,8 @@ public abstract class Critter {
 		offspring.y_coord = y_coord;
 		change_coord(direction,1);
 		babies.add(offspring);
+		reproduce_num ++;
+		
 	}
 
 	public abstract void doTimeStep();
@@ -284,11 +293,19 @@ public abstract class Critter {
 	 */
 	private void absorbsEnergy(Critter B){
 		energy += B.getEnergy()/2;
-		B.die();
+		B.energy = 0; 
 	}
-	private void die() {
-		population.remove(this);
-	}
+//	private void die() {
+//		System.out.println(this.toString());
+//		if(this.toString().equals("@")){
+//			population.remove(this);
+//			return;
+//		}
+//		System.out.println(population.size());
+//		population.remove(this);
+//		//population.remov
+//		System.out.println(population.size());
+//	}
 
 
 	private boolean samePosition(Critter B){
@@ -312,19 +329,19 @@ public abstract class Critter {
 			e.printStackTrace();
 		}
 		for(Critter c : babies){
-			System.out.println("dying");
+			//System.out.println("dying");
 			population.add(c);
 		}
-
+		babies.clear();
+		for(Critter c: population){
+			c.resetWalk();
+			c.doTimeStep();
+		}
 		
 		for(int i = 0; i<population.size(); i++){
-			Critter A = population.get(i);
-			A.doTimeStep();
-			for(int j = 0; j<population.size(); j++){
-				if(j==i){
-					continue;
-				}
+			for(int j = i+1; j<population.size(); j++){
 				Critter B = population.get(j);
+				Critter A = population.get(i);
 				if(A.samePosition(B)){
 					A.isFighting=true;
 					boolean Afight = A.fight(B.toString());
@@ -355,10 +372,40 @@ public abstract class Critter {
 			Critter c = population.get(i);
 			c.energy -= Params.rest_energy_cost;
 			if(!c.isAlive()){
-				c.die();
+//				if(!temp_string.equals("@")){
+//					System.out.println("dying");
+//					System.out.println(population.toString());
+//				}
+				Critter j = population.get(population.size()-1);
+//				if(j.toString().equals(c.toString())&&!c.toString().equals("@")){
+//					System.out.println(population.toString());
+//				}
+//				System.out.println(j);
+				population.set(i, j);
+				population.remove(population.size() -1);
+//				if(j.toString().equals(c.toString())&&!c.toString().equals("@")){
+//					System.out.println(population.toString());
+//				}
+//				System.out.println(c);
+//				if(!temp_string.equals("@")){
+//					die_num ++;
+//					//System.out.println("dying " + die_num);
+//					if(die_num > reproduce_num){
+//						
+//						for(Critter b: population){
+//							if(!b.toString().equals("@")){
+//								System.out.print("!");
+//							}
+//						}
+//					}
+//				}
+//				if(!temp_string.equals("@")){
+//					System.out.println(i);
+//					System.out.println(population.toString());
+//				}
 			}
-			c.resetWalk();
 		}
+//		System.out.println("end of step");
 	}
 
 	public static void displayWorld() {
