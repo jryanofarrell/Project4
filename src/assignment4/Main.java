@@ -81,7 +81,10 @@ public class Main {
 //			e1.printStackTrace();
 //		}
         //myPackage = Critter.class.getPackage().toString().split(" ")[1];
+        
+        boolean invalid;
         while(true){
+        	invalid =false;
         	System.out.print("Command: ");
 	        String input = kb.nextLine();
 	        String[] splitted = input.split("\\s+");
@@ -105,8 +108,8 @@ public class Main {
 	        		try{
 	        			steps = Integer.parseInt(second_arg);
 	        		}catch(NumberFormatException e){
-	        			e.printStackTrace();
-	        			//System.out.println();
+	        			System.out.println("Invalid command : " + input);
+	        			continue;
 	        		}
 	        	}
 	        	for(int i = 0; i<steps; i++){
@@ -119,7 +122,8 @@ public class Main {
         			seed = Integer.parseInt(second_arg);
         			Critter.setSeed(seed);
         		}catch(NumberFormatException e){
-        			e.printStackTrace();
+        			System.out.println("Invalid command : " + input);
+        			continue;
         			//System.out.println();
         		}
         	
@@ -132,16 +136,17 @@ public class Main {
 	        		try{
 	        			num_critters = Integer.parseInt(third_arg);
 	        		}catch(NumberFormatException e){
-	        			e.printStackTrace();
-	        			//System.out.println();
+	        			System.out.println("Invalid command : " + input);
+	        			continue;
 	        		}
 	        	}
 	        	for (int i = 0; i<num_critters; i++){
 	        		try {
 						Critter.makeCritter(critter);
 					} catch (InvalidCritterException e) {
-						e.printStackTrace();
-						//System.out.println();
+						//e.printStackTrace();
+						System.out.println("Invalid command : " + input);
+						continue;
 					}
 	        	}
 	        }
@@ -152,8 +157,9 @@ public class Main {
 	        	try {
 					critter_list = Critter.getInstances(myPackage + "."+ class_name);
 				} catch (InvalidCritterException e) {
-					e.printStackTrace();
-					//System.out.println();
+					//e.printStackTrace();
+					System.out.println("Invalid command : " + input);
+					continue;
 				}
 	        	//Class<?>[] types = {critter_list.class};
 	        	Class<?> newCritterClass = null;
@@ -191,8 +197,9 @@ public class Main {
 	    		
 	    		
 	        	//Critter.runStats(critter_list);
-	        }
-	        System.out.println("\n");
+	        }else
+	        	System.out.println("Invalid command : " + input);
+	        System.out.println();
         }
         /* Write your code above */
         //System.out.flush();
