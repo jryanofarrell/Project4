@@ -9,8 +9,8 @@ public class MyCritter1 extends Critter {
 		else
 			walk(Critter.getRandomInt(3)*2);	//the critter can't walk diagonally
 		diag= !diag;
-		if (Critter.getRandomInt(5)==5)
-			reproduce(new MyCritter1(),Critter.getRandomInt(7));
+		if (Critter.getRandomInt(5)==0)
+			reproduce(new MyCritter1(),Critter.getRandomInt(8));
 	}
 
 	@Override
@@ -18,7 +18,7 @@ public class MyCritter1 extends Critter {
 		if (getEnergy() > 60)
 			return true;
 		else if (getEnergy()>40)
-			run(Critter.getRandomInt(7));
+			run(Critter.getRandomInt(8));
 		return false;
 	}
 	
