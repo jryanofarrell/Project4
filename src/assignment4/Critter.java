@@ -25,7 +25,6 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new ArrayList<Critter>();
 	private static List<Critter> babies = new ArrayList<Critter>();
-	private int index;
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -157,7 +156,6 @@ public abstract class Critter {
 		newCritter.y_coord = Critter.getRandomInt(Params.world_height);
 		newCritter.energy = Params.start_energy;
 		population.add(newCritter);
-		newCritter.index=population.size()-1;
 		
 	}
 	
@@ -272,7 +270,7 @@ public abstract class Critter {
 		B.die();
 	}
 	private void die() {
-		population.remove(index);
+		population.remove(this);
 	}
 
 
@@ -298,9 +296,7 @@ public abstract class Critter {
 		}
 		for(Critter c : babies){
 			population.add(c);
-			c.index=population.size()-1;
 		}
-		babies.clear();
 //		for(Critter c : population){
 //			c.doTimeStep();
 		
