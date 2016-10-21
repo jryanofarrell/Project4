@@ -12,6 +12,12 @@
  */
 package assignment4;
 
+/**
+ * this critter walks diagonally then not diagonally
+ * @author Clément
+ *
+ */
+
 public class Critter1 extends Critter {
 	private boolean diag=true;
 	@Override
@@ -38,7 +44,7 @@ public class Critter1 extends Critter {
 		return "1";
 	}
 	public static void runStats(java.util.List<Critter> my3s) {
-		System.out.print("" + my3s.size() + " total Critter1s    ");
+		System.out.print("" + my3s.size() + " total Critter1s");
 		System.out.println();
 	}
 }

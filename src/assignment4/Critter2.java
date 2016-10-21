@@ -12,11 +12,11 @@
  */
 package assignment4;
 
-import java.util.List;
-
-/*
+/**
  *This critter is a magician but not really powerful, he increases his magic by eating algae, he has to use magic to do his actions
  *If wins against another magician, he triples his magic
+ *@author Clément
+ *
  */
 public class Critter2 extends Critter{
 	private int magic=5;
@@ -55,8 +55,13 @@ public class Critter2 extends Critter{
 	public String toString() {
 		return "2";
 	}
+	
 	public static void runStats(java.util.List<Critter> my3s) {
-		System.out.print("" + my3s.size() + " total Critter3s    ");
+		int totalMagic =0;
+		for (Critter c : my3s){
+			totalMagic +=((Critter2)c).magic;
+		}
+		System.out.print("" + my3s.size() + " total Critter3s, the total magic in this world is " + totalMagic);
 		System.out.println();
 	}
 }
