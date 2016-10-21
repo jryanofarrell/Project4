@@ -1,9 +1,9 @@
 package assignment4;
 
-/*
- * Example critter
- */
-public class MyCritter4 extends Critter {
+/**
+ * Critter 4 "evolves" twice in one reproduction and only runs when it gets in a fight, it always runs from everything but algae
+ **/
+public class Critter4 extends Critter {
 	
 	@Override
 	public String toString() { return "4"; }
@@ -12,7 +12,7 @@ public class MyCritter4 extends Critter {
 	private int[] genes = new int[8];
 	private int dir;
 
-	public MyCritter4() {
+	public Critter4() {
 		for (int k = 0; k < 8; k += 1) {
 			genes[k] = GENE_TOTAL/8;
 		}
@@ -28,7 +28,7 @@ public class MyCritter4 extends Critter {
 	public void doTimeStep() {
 		/* take one step forward */
 		if (getEnergy() > 100) {
-			MyCritter4 child = new MyCritter4();
+			Critter4 child = new Critter4();
 			int num_variation = 0; 
 			for (int k = 0; k < 8; k += 1) {
 				child.genes[k] = this.genes[k];
@@ -75,13 +75,13 @@ public class MyCritter4 extends Critter {
 		int total_right = 0;
 		int total_back = 0;
 		for (Object obj : my4s) {
-			MyCritter4 c = (MyCritter4) obj;
+			Critter4 c = (Critter4) obj;
 			total_straight += c.genes[0];
 			total_right += c.genes[1] + c.genes[2] + c.genes[3];
 			total_back += c.genes[4];
 			total_left += c.genes[5] + c.genes[6] + c.genes[7];
 		}
-		System.out.print("" + my4s.size() + " total MyCritter4s    ");
+		System.out.print("" + my4s.size() + " total Critter4s    ");
 		System.out.print("" + total_straight / (GENE_TOTAL * 0.01 * my4s.size()) + "% straight   ");
 		System.out.print("" + total_back / (GENE_TOTAL * 0.01 * my4s.size()) + "% back   ");
 		System.out.print("" + total_right / (GENE_TOTAL * 0.01 * my4s.size()) + "% right   ");

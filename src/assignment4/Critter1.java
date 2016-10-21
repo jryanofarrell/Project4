@@ -1,6 +1,6 @@
 package assignment4;
 
-public class MyCritter1 extends Critter {
+public class Critter1 extends Critter {
 	private boolean diag=true;
 	@Override
 	public void doTimeStep() {
@@ -10,7 +10,7 @@ public class MyCritter1 extends Critter {
 			walk(Critter.getRandomInt(3)*2);	//the critter can't walk diagonally
 		diag= !diag;
 		if (Critter.getRandomInt(5)==0)
-			reproduce(new MyCritter1(),Critter.getRandomInt(8));
+			reproduce(new Critter1(),Critter.getRandomInt(8));
 	}
 
 	@Override
@@ -24,5 +24,9 @@ public class MyCritter1 extends Critter {
 	
 	public String toString() {
 		return "1";
+	}
+	public static void runStats(java.util.List<Critter> my3s) {
+		System.out.print("" + my3s.size() + " total Critter1s    ");
+		System.out.println();
 	}
 }

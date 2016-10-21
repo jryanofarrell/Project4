@@ -6,14 +6,14 @@ import java.util.List;
  *This critter is a magician but not really powerful, he increases his magic by eating algae, he has to use magic to do his actions
  *If wins against another magician, he triples his magic
  */
-public class MyCritter2 extends Critter{
+public class Critter2 extends Critter{
 	private int magic=5;
 	
 	//
 	@Override
 	public void doTimeStep () {
 		if (magic>=10){
-			reproduce(new MyCritter2(), magic%8);
+			reproduce(new Critter2(), magic%8);
 			magic-=10;
 		}if (magic>5){
 			walk(magic%8);
@@ -43,5 +43,8 @@ public class MyCritter2 extends Critter{
 	public String toString() {
 		return "2";
 	}
-
+	public static void runStats(java.util.List<Critter> my3s) {
+		System.out.print("" + my3s.size() + " total Critter3s    ");
+		System.out.println();
+	}
 }
